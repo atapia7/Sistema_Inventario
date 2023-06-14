@@ -1,0 +1,36 @@
+# Archivos de compilación
+bin/
+obj/
+
+# Archivos de configuración local
+*.user
+*.suo
+*.vs/
+*.vssscc
+*.csproj.user
+
+# Archivos de caché y logs
+*.log
+*.vspscc
+*.ncrunch*
+*.[Cc]ache
+*.bak
+
+# Archivos temporales
+[Tt]emp/
+obj/
+[Bb]uild/
+
+# Archivos de análisis de código
+*.sln.docstates
+
+# Archivos de herramientas de desarrollo
+_ReSharper*/
+*.resharper
+*.DotSettings
+
+# Otros archivos temporales o generados automáticamente
+thumbs.db
+desktop.ini
+*.DS_Store
+*.vscode/
