@@ -1,67 +1,79 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaInventario.AccesoDatos.Data;
+using SistemaInventario.AccesoDatos.Repositorio.IRepositorio;
+using SistemaInventario.Modelos.Especificaciones;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using SistemaInventario.AccesoDatos.Data;
-using SistemaInventario.AccesoDatos.Repositorio.IRepositorio;
 
 namespace SistemaInventario.AccesoDatos.Repositorio
 {
-    public class Repositorio<T> :IRepositorio<T> where T : class
+    public class Repositorio<T> : IRepositorio<T> where T : class
     {
-        private readonly DbContext _db;
-        internal DbSet<T> dbset;
-        public Repositorio(ApplicationDbContext db) {
-           _db = db;
-            this.dbset=db.Set<T>();
+
+        private readonly ApplicationDbContext _db;
+        internal DbSet<T> dbSet;
+
+        public Repositorio(ApplicationDbContext db)
+        {
+            _db = db;
+            this.dbSet = _db.Set<T>();
         }
 
-        public Task<T> Agregar(T entidad)
+
+        public async Task Agregar(T entidad)
         {
-            throw new NotImplementedException();
+           await dbSet.AddAsync(entidad);    // insert into Table
         }
 
-        public Task<T> Obtener(int id)
+        public async Task<T> Obtener(int id)
         {
-            throw new NotImplementedException();
+            return await dbSet.FindAsync(id);    // select * from (Solo por Id)
         }
 
-        public async Task<T> ObtenerPrimero(Expression<Func<T, bool>> filtro = null, string incluirPropiedades = null, bool isTracking = true)
+
+        public async Task<IEnumerable<T>> ObtenerTodos(Expression<Func<T, bool>> filtro = null, 
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string incluirPropiedades = null, bool isTracking = true)
         {
-            IQueryable<T> query = dbset;
-            if (filtro != null)
+            IQueryable<T> query = dbSet;
+            if(filtro !=null)
             {
-                query = query.Where(filtro);
+                query = query.Where(filtro);   //  select /* from where ....
             }
-            if (incluirPropiedades != null)
+            if(incluirPropiedades !=null)
             {
-                foreach (var incluirProp in incluirPropiedades.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var incluirProp in incluirPropiedades.Split(new char[] { ','}, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    query = query.Include(incluirProp);
+                    query = query.Include(incluirProp);    //  ejemplo "Categoria,Marca"
                 }
             }
-            if (!isTracking)
+            if(orderBy !=null)
+            {
+                query = orderBy(query);
+            }
+            if(!isTracking)
             {
                 query = query.AsNoTracking();
             }
-            return await query.FirstOrDefaultAsync();
+            return await query.ToListAsync();
+
         }
 
-        public async Task<IEnumerable<T>> ObtenerTodos(Expression<Func<T, bool>> filtro = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string incluirPropiedades = null, bool isTracking = true)
+        public PagedList<T> ObtenerTodosPaginado(Parametros parametros, Expression<Func<T, bool>> filtro = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string incluirPropiedades = null, bool isTracking = true)
         {
-            IQueryable<T> query = dbset;
+            IQueryable<T> query = dbSet;
             if (filtro != null)
             {
-                query = query.Where(filtro);
+                query = query.Where(filtro);   //  select /* from where ....
             }
             if (incluirPropiedades != null)
             {
                 foreach (var incluirProp in incluirPropiedades.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    query = query.Include(incluirProp);
+                    query = query.Include(incluirProp);    //  ejemplo "Categoria,Marca"
                 }
             }
             if (orderBy != null)
@@ -70,19 +82,47 @@ namespace SistemaInventario.AccesoDatos.Repositorio
             }
             if (!isTracking)
             {
-                query=query.AsNoTracking();
+                query = query.AsNoTracking();
             }
-            return await query.ToListAsync();
+            return PagedList<T>.ToPagedList(query, parametros.PageNumber, parametros.PageSize);
         }
+
+        public async Task<T> ObtenerPrimero(Expression<Func<T, bool>> filtro = null,
+            string incluirPropiedades = null, bool isTracking = true)
+        {
+
+            IQueryable<T> query = dbSet;
+            if (filtro != null)
+            {
+                query = query.Where(filtro);   //  select /* from where ....
+            }
+            if (incluirPropiedades != null)
+            {
+                foreach (var incluirProp in incluirPropiedades.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(incluirProp);    //  ejemplo "Categoria,Marca"
+                }
+            }
+          
+            if (!isTracking)
+            {
+                query = query.AsNoTracking();
+            }
+            return await query.FirstOrDefaultAsync();
+        }
+
+       
 
         public void Remover(T entidad)
         {
-            dbset.Remove(entidad);    
+            dbSet.Remove(entidad);
         }
 
         public void RemoverRango(IEnumerable<T> entidad)
         {
-            dbset.RemoveRange(entidad);
+           dbSet.RemoveRange(entidad);
         }
+
+       
     }
 }
