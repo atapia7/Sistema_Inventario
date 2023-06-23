@@ -36,11 +36,14 @@ namespace SistemaInventario.AccesoDatos.Data
 
         public DbSet<OrdenDetalle> OrdenDetalles { get; set; }
 
+        #region FLUENT API
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+        #endregion
+
 
     }
 }

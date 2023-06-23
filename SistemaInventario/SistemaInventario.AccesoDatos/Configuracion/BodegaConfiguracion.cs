@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace SistemaInventario.AccesoDatos.Configuracion
 {
+    #region USANDO FLUENT API
+   
     public class BodegaConfiguracion : IEntityTypeConfiguration<Bodega>
     {
         public void Configure(EntityTypeBuilder<Bodega> builder)
@@ -19,4 +21,5 @@ namespace SistemaInventario.AccesoDatos.Configuracion
             builder.Property(x => x.Estado).IsRequired();
         }
     }
+    #endregion
 }

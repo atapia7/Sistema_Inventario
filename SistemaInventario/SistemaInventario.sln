@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaInventario.Modelos",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaInventario.Utilidades", "SistemaInventario.Utilidades\SistemaInventario.Utilidades.csproj", "{4872C6BE-C89F-422F-9ECF-1BB0C80643A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaInventario", "SistemaInventario\SistemaInventario.csproj", "{65B8C1A2-9BD3-4810-95BA-6FBCDCAEE668}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4872C6BE-C89F-422F-9ECF-1BB0C80643A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4872C6BE-C89F-422F-9ECF-1BB0C80643A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4872C6BE-C89F-422F-9ECF-1BB0C80643A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65B8C1A2-9BD3-4810-95BA-6FBCDCAEE668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65B8C1A2-9BD3-4810-95BA-6FBCDCAEE668}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65B8C1A2-9BD3-4810-95BA-6FBCDCAEE668}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65B8C1A2-9BD3-4810-95BA-6FBCDCAEE668}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
