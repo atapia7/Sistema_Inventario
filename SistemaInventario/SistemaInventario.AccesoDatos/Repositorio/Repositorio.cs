@@ -26,7 +26,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio
 
         public async Task Agregar(T entidad)
         {
-           await dbSet.AddAsync(entidad);    // insert into Table
+            await dbSet.AddAsync(entidad);    // insert into Table
         }
 
         public async Task<T> Obtener(int id)
@@ -35,7 +35,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio
         }
 
 
-        public async Task<IEnumerable<T>> ObtenerTodos(Expression<Func<T, bool>> filtro = null, 
+        public async Task<IEnumerable<T>> ObtenerTodos(Expression<Func<T, bool>> filtro = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string incluirPropiedades = null, bool isTracking = true)
         {
             IQueryable<T> query = dbSet;
@@ -103,7 +103,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio
                     query = query.Include(incluirProp);    //  ejemplo "Categoria,Marca"
                 }
             }
-          
+
             if (!isTracking)
             {
                 query = query.AsNoTracking();
@@ -111,7 +111,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio
             return await query.FirstOrDefaultAsync();
         }
 
-       
+
 
         public void Remover(T entidad)
         {
@@ -120,9 +120,9 @@ namespace SistemaInventario.AccesoDatos.Repositorio
 
         public void RemoverRango(IEnumerable<T> entidad)
         {
-           dbSet.RemoveRange(entidad);
+            dbSet.RemoveRange(entidad);
         }
 
-       
+
     }
 }
