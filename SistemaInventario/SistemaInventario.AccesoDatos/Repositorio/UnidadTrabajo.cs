@@ -37,7 +37,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio
         {
             _db = db;
             Bodega = new BodegaRepositorio(_db);
-            //Categoria = new CategoriaRepositorio(_db);
+            Categoria = new CategoriaRepositorio(_db);
             //Marca = new MarcaRepositorio(_db); 
             //Producto = new ProductoRepositorio(_db);
             //UsuarioAplicacion = new UsuarioAplicacionRepositorio(_db);
